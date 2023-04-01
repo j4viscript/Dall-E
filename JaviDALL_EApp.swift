@@ -11,7 +11,7 @@ import SwiftUI
 struct JaviDALL_EApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            GenerateView()
         }
     }
 }

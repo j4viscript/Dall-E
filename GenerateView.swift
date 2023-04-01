@@ -8,14 +8,14 @@
 import SwiftUI
 
 struct GenerateView: View {
-    @State var text = "Two astronautrs exploring the dark, cavernouse interior of a huge derelict spacecraft"
+    @StateObject var viewModel = ViewModel()
+    @State var text = ""
     
     var body: some View {
         VStack {
-            Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
-            
+            Text("Create Images by IA")
             Form {
-                AsyncImage(url: URL(string: "")) { image in
+                AsyncImage(url: viewModel.imageURL) { image in
                     image
                         .resizable()
                         .scaledToFit()
@@ -27,8 +27,7 @@ struct GenerateView: View {
                             .scaledToFit()
                     }
                     .frame(width: 300, height: 300)
-                }
-                
+                }//:ASYNC IMAGE
                 TextField("Describe the image that you want to generate",
                           text: $text,
                           axis: .vertical)
@@ -36,16 +35,22 @@ struct GenerateView: View {
                 .lineSpacing(5)
                 HStack{
                     Spacer()
-                    Button("Generate"){
-                        //TODO
-                    }
+                    Button("Generate Image"){
+                        Task{
+                            await viewModel.generateImage(withText: text)
+                        }//:TASK
+                    }//:BUTTON
                     .buttonStyle(.borderedProminent)
                     .disabled(false)
                     .padding(.vertical)
                     Spacer()
                 }
-            }
-        }
+            }//:FORM
+            Spacer()
+            HStack{
+                Text("Desarrollado por Javier Murillo&reg;")
+            }//:HSTACK
+        }//:VSTACK
     }
 }
 
