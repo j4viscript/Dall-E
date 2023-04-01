@@ -9,7 +9,7 @@ import SwiftUI
 
 struct GenerateView: View {
     @StateObject var viewModel = ViewModel()
-    @State var text = ""
+    @State var text = "A cute baby sea otter"
     
     var body: some View {
         VStack {
@@ -19,12 +19,18 @@ struct GenerateView: View {
                     image
                         .resizable()
                         .scaledToFit()
-                    
                 }placeholder: {
                     VStack{
-                        Image(systemName: "photo.on.rectangle.angled")
-                            .resizable()
-                            .scaledToFit()
+                        if !viewModel.isLoading{
+                            Image(systemName: "photo.on.rectangle.angled")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 40)
+                        }else{
+                            ProgressView()
+                                .padding(.bottom, 12)
+                            Text("Cargando..")
+                        }
                     }
                     .frame(width: 300, height: 300)
                 }//:ASYNC IMAGE
@@ -41,7 +47,7 @@ struct GenerateView: View {
                         }//:TASK
                     }//:BUTTON
                     .buttonStyle(.borderedProminent)
-                    .disabled(false)
+                    .disabled(viewModel.isLoading)
                     .padding(.vertical)
                     Spacer()
                 }

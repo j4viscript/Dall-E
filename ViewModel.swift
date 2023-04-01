@@ -10,7 +10,7 @@ import Foundation
 final class ViewModel: ObservableObject{
     private let urlSession: URLSession
     @Published var imageURL: URL?
-
+    @Published var isLoading = false
     init(urlSession: URLSession = URLSession.shared) {
         self.urlSession = urlSession
     }
@@ -31,10 +31,15 @@ final class ViewModel: ObservableObject{
         ]
         urlRequest.httpBody = try! JSONSerialization.data(withJSONObject: dictionary, options: [])
         do{
+            
+            DispatchQueue.main.async {
+                self.isLoading = true
+            }
             let (data, _) = try await urlSession.data(for: urlRequest)
             let model = try JSONDecoder().decode(ModelResponse.self, from: data)
             
             DispatchQueue.main.async {
+                self.isLoading = false
                 guard let firstModel = model.data.first else {
                     return
                 }
