@@ -22,7 +22,7 @@ final class ViewModel: ObservableObject{
         var urlRequest = URLRequest(url: url)
         urlRequest.httpMethod = "POST"
         urlRequest.addValue("application/json", forHTTPHeaderField: "Content-Type")
-        urlRequest.addValue("Bearer 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", forHTTPHeaderField: "Authorization")
+        urlRequest.addValue("Bearer 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", forHTTPHeaderField: "Authorization")
         
         let dictionary: [String: Any] = [
             "n": 1,
@@ -31,7 +31,6 @@ final class ViewModel: ObservableObject{
         ]
         urlRequest.httpBody = try! JSONSerialization.data(withJSONObject: dictionary, options: [])
         do{
-            
             DispatchQueue.main.async {
                 self.isLoading = true
             }
@@ -48,7 +47,7 @@ final class ViewModel: ObservableObject{
             }
             
         }catch{
-            print("Semen")
+            print("semen1")
         }
     }
 }
